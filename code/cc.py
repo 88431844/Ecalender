@@ -37,7 +37,7 @@ def drawMonth(month=1):
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
-        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
+        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 14))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
@@ -49,7 +49,7 @@ def drawMonth(month=1):
                 fill = (255, 0, 0)
             else:
                 fill = (0, 0, 0)
-            draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
+            draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 12))
         col += 1
         # to a new week
         if col == 8:
