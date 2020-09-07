@@ -11,7 +11,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from epd_driver import epd4in2bc
+from waveshare_epd import epd4in2bc
 import time
 from PIL import Image, ImageDraw, ImageFont
 
