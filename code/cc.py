@@ -1,6 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
 import calendar
 import os
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 def drawMonth(month=1):
     WEEK = ('周一', '周二', '周三', '周四', '周五', '周六', '周日')
