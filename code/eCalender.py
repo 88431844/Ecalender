@@ -33,7 +33,7 @@ try:
     # epd.displayBlack(epd.getbuffer(calender_image.rotate(270).transpose(Image.FLIP_LEFT_RIGHT)))
 
     logging.info("displayBlack ing")
-    epd.displayBlack(epd.getbuffer(calender_image))
+    epd.displayBlack(epd.getbuffer(calender_image.rotate(270).transpose(Image.FLIP_LEFT_RIGHT)))
     logging.info("displayBlack done")
 
 except IOError as e:
