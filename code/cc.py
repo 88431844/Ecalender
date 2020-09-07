@@ -1,19 +1,14 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
 from PIL import Image, ImageDraw, ImageFont
 import calendar
 import os
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 def drawMonth(month=1):
-    WEEK = ('周一', '周二', '周三', '周四', '周五', '周六', '周日')
-    MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
-             '七月', '八月', '九月', '十月', '十一月', '十二月')
+    WEEK = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
+    MONTH = ('January', 'February', 'March', 'April', 'May', 'June',
+             'July', 'August', 'September', 'October', 'November', 'December')
 
     # create new blank picture
-    img = Image.new('RGB', size=(400, 300), color=(255,255,255))
+    img = Image.new('RGB', size=(1920, 1080), color=(255,255,255))
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -36,13 +31,13 @@ def drawMonth(month=1):
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, '亖言自制-相思体.ttc'), 16))
+            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87))
             top = rowSpace // 10
             draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=(0,0,0))
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
-        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, '亖言自制-相思体.ttc'), 12))
+        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
@@ -54,7 +49,7 @@ def drawMonth(month=1):
                 fill = (255, 0, 0)
             else:
                 fill = (0, 0, 0)
-            draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 12))
+            draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87))
         col += 1
         # to a new week
         if col == 8:
