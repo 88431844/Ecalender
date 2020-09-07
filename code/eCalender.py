@@ -69,8 +69,8 @@ try:
         if i == 0:
             calender_draw.text((colSpace, rowSpace), MONTH[month-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
             top = rowSpace // 10
-            calender_draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=(0,0,0))
-            calender_draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
+            calender_draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=0)
+            calender_draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=0)
             continue
         # draw week title
         calender_draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 10))
