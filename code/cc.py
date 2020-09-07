@@ -36,13 +36,13 @@ def drawMonth(month=1):
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, 'font-old.ttc'), 16))
+            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, '亖言自制-相思体.ttc'), 16))
             top = rowSpace // 10
             draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=(0,0,0))
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
-        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-old.ttc'), 12))
+        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, '亖言自制-相思体.ttc'), 12))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
