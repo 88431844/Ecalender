@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 from PIL import Image, ImageDraw, ImageFont
 import calendar
 import os
