@@ -26,7 +26,7 @@ try:
 
     font = ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87)
 
-    calender_image = Image.new('1', (epd.height, epd.width), 255)
+    calender_image = Image.new('1', (epd.width, epd.height), 255)
     calender_draw = ImageDraw.Draw(calender_image)
     time_draw = ImageDraw.Draw(calender_image)
     time_draw.text((0, 0), time.strftime('%H:%M'), font=font, fill=0)
