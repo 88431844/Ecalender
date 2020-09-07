@@ -8,7 +8,7 @@ def drawMonth(month=1):
              'July', 'August', 'September', 'October', 'November', 'December')
 
     # create new blank picture
-    img = Image.new('RGB', size=(1920, 1080), color=(255,255,255))
+    img = Image.new('RGB', size=(400, 300), color=(255,255,255))
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
