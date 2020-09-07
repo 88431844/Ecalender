@@ -92,8 +92,9 @@ try:
             col = 1
             row += 1
 
-
-    epd.displayBlack(epd.getbuffer(calender_image))
+    flipImg = calender_image.transpose(Image.FLIP_LEFT_RIGHT)
+    rotateImg = flipImg.rotate(180)
+    epd.displayBlack(epd.getbuffer(rotateImg))
 
 except IOError as e:
     logging.info(e)
