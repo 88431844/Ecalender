@@ -82,9 +82,9 @@ try:
         if day > 0:
             # if weekday, draw with red color
             if col == 6 or col == 7:
-                fill = (255, 0, 0)
+                fill = 0
             else:
-                fill = (0, 0, 0)
+                fill = 0
             calender_draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
         col += 1
         # to a new week
