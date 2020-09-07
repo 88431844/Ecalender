@@ -95,7 +95,7 @@ class EPD:
         self.send_data(0x04)
         self.send_data(0x63)
 
-        self.send_command(0x0C);  # Soft start setting
+        self.send_command(0x0C)  # Soft start setting
         self.send_data(0x8B)
         self.send_data(0x9C)
         self.send_data(0x96)
@@ -111,7 +111,7 @@ class EPD:
 
         self.send_command(0x44)  # set Ram-X address start/end position
         self.send_data(0x00)
-        self.send_data(0x31);  # RAM x address end at 31h(49+1)*8->400
+        self.send_data(0x31)  # RAM x address end at 31h(49+1)*8->400
 
         self.send_command(0x45)  # set Ram-Y address start/end position
         self.send_data(0x2B)  # RAM y address start at 12Bh
@@ -205,7 +205,7 @@ class EPD:
             for i in range(0, linewidth):
                 self.send_data(image[i + j * linewidth])
 
-        self.UpdateDisplay()
+        self.UpdateDisplayPart()
 
     def displayPartialBlack(self, image):
         #done
@@ -219,7 +219,7 @@ class EPD:
             for i in range(0, linewidth):
                 self.send_data(image[i + j * linewidth])
 
-        self.UpdateDisplay()
+        self.UpdateDisplayPart()
 
     def Clear(self):
         #done
@@ -252,6 +252,12 @@ class EPD:
         #done
         self.send_command(0x22)
         self.send_data(0xC7)
+        self.send_command(0x20)
+        self.ReadBusy()
+
+    def UpdateDisplayPart(self):
+        self.send_command(0x22)
+        self.send_data(0x0c)
         self.send_command(0x20)
         self.ReadBusy()
 ### END OF FILE ###
