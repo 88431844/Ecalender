@@ -3,9 +3,9 @@ import calendar
 import os
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 def drawMonth(month=1):
-    WEEK = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
-    MONTH = ('January', 'February', 'March', 'April', 'May', 'June',
-             'July', 'August', 'September', 'October', 'November', 'December')
+    WEEK = ('周一', '周二', '周三', '周四', '周五', '周六', '周日')
+    MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
+             '七月', '八月', '九月', '十月', '十一月', '十二月')
 
     # create new blank picture
     img = Image.new('RGB', size=(400, 300), color=(255,255,255))
@@ -31,13 +31,13 @@ def drawMonth(month=1):
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
+            draw.text((colSpace, rowSpace), MONTH[month-1], fill=(0,0,0,), font=ImageFont.truetype(os.path.join(picdir, 'font-old.ttc'), 16))
             top = rowSpace // 10
             draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=(0,0,0))
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
-        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 12))
+        draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=(0,0,0), font=ImageFont.truetype(os.path.join(picdir, 'font-old.ttc'), 12))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
