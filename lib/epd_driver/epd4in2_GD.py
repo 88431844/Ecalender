@@ -206,23 +206,9 @@ class EPD:
 
     def displayBlack(self, imageblack):
         #done
-        # self.send_command(0x24)
-        # for i in range(0, int(self.width * self.height / 8)):
-        #     self.send_data(imageblack[i])
-
-        if (imageblack != None):
-            self.send_command(0x24)  # DATA_START_TRANSMISSION_1
-            for i in range(0, int(self.width * self.height / 8)):
-                temp = 0x00
-                for bit in range(0, 4):
-                    if (imageblack[i] & (0x80 >> bit) != 0):
-                        temp |= 0xC0 >> (bit * 2)
-                self.send_data(temp)
-                temp = 0x00
-                for bit in range(4, 8):
-                    if (imageblack[i] & (0x80 >> bit) != 0):
-                        temp |= 0xC0 >> ((bit - 4) * 2)
-                self.send_data(temp)
+        self.send_command(0x24)
+        for i in range(0, int(self.width * self.height / 8)):
+            self.send_data(imageblack[i])
 
         self.UpdateDisplay()
 
