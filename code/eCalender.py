@@ -38,7 +38,7 @@ try:
     # epd.displayBlack(epd.getbuffer(rotateImg))
 
     month=9
-    WEEK = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
+    WEEK = ('一', '二', '三', '四', '五', '六', '日')
     MONTH = ('January', 'February', 'March', 'April', 'May', 'June',
              'July', 'August', 'September', 'October', 'November', 'December')
 
@@ -73,7 +73,7 @@ try:
             calender_draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=0)
             continue
         # draw week title
-        calender_draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 10))
+        calender_draw.text((colSpace*i, rowSpace*2), u' ' + WEEK[i-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-old.ttc'), 10))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
