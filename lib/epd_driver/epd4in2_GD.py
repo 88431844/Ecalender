@@ -254,6 +254,16 @@ class EPD:
 
         self.UpdateDisplay()
 
+
+    def ClearBlack(self):
+        #done
+        #clear black
+        self.send_command(0x24)
+        for i in range(0, int(self.width * self.height / 8)):
+            self.send_data(0xFF)
+
+        self.UpdateDisplay()
+
     def sleep(self):
         #done
         self.send_command(0x22) #POWER OFF

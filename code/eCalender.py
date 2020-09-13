@@ -22,7 +22,7 @@ try:
     epd = epd4in2_GD.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
+    epd.ClearBlack()
     logging.info("Clear done")
 
     font = ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87)
