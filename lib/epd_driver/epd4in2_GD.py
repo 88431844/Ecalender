@@ -114,8 +114,12 @@ class EPD:
         self.send_data(0x31)  # RAM x address end at 31h(49+1)*8->400
 
         self.send_command(0x45)  # set Ram-Y address start/end position
-        self.send_data(0x2B)  # RAM y address start at 12Bh
+        # self.send_data(0x2B)  # RAM y address start at 12Bh
+        # self.send_data(0x01)
+        
         self.send_data(0x01)
+        self.send_data(0x2B)  # RAM y address start at 12Bh
+
         self.send_data(0x00)  # RAM y address end at 00h
         self.send_data(0x00)
 
