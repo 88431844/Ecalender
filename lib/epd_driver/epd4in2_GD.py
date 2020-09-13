@@ -1,5 +1,5 @@
 # *****************************************************************************
-# * | File        :	  epd4in2bc.py
+# * | File        :	  epd4in2_GD.py
 # * | Author      :   Waveshare team
 # * | Function    :   Electronic paper driver
 # * | Info        :

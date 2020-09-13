@@ -12,14 +12,14 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd4in2bc
+from epd_driver import epd4in2_GD
 import time
 from PIL import Image, ImageDraw, ImageFont
 
 try:
     logging.info("eCalender")
 
-    epd = epd4in2bc.EPD()
+    epd = epd4in2_GD.EPD()
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
@@ -101,5 +101,5 @@ except IOError as e:
 
 except KeyboardInterrupt:
     logging.info("ctrl + c:")
-    epd4in2bc.epdconfig.module_exit()
+    epd4in2_GD.epdconfig.module_exit()
     exit()
