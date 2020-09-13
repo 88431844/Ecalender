@@ -141,28 +141,46 @@ class EPD:
 
         return 0
 
+    # def getbuffer(self, image):
+    #     # logging.debug("bufsiz = ",int(self.width/8) * self.height)
+    #     buf = [0xFF] * (int(self.width / 8) * self.height)
+    #     image_monocolor = image.convert('1')
+    #     imwidth, imheight = image_monocolor.size
+    #     pixels = image_monocolor.load()
+    #     # logging.debug("imwidth = %d, imheight = %d",imwidth,imheight)
+    #     if (imwidth == self.width and imheight == self.height):
+    #         logging.debug("Horizontal")
+    #         for y in range(imheight):
+    #             for x in range(imwidth):
+    #                 # Set the bits for the column of pixels at the current position.
+    #                 if pixels[x, y] == 0:
+    #                     buf[int((x + y * self.width) / 8)] &= ~(0x80 >> (x % 8))
+    #     elif (imwidth == self.height and imheight == self.width):
+    #         logging.debug("Vertical")
+    #         for y in range(imheight):
+    #             for x in range(imwidth):
+    #                 newx = y
+    #                 newy = self.height - x - 1
+    #                 if pixels[x, y] == 0:
+    #                     buf[int((newx + newy * self.width) / 8)] &= ~(0x80 >> (y % 8))
+    #     return buf
+
     def getbuffer(self, image):
-        # logging.debug("bufsiz = ",int(self.width/8) * self.height)
-        buf = [0xFF] * (int(self.width / 8) * self.height)
+        buf = [0xFF] * int(self.width * self.height / 8)
+        # Set buffer to value of Python Imaging Library image.
+        # Image must be in mode 1.
         image_monocolor = image.convert('1')
         imwidth, imheight = image_monocolor.size
+        if imwidth != self.width or imheight != self.height:
+            raise ValueError('Image must be same dimensions as display \
+                ({0}x{1}).' .format(self.width, self.height))
+
         pixels = image_monocolor.load()
-        # logging.debug("imwidth = %d, imheight = %d",imwidth,imheight)
-        if (imwidth == self.width and imheight == self.height):
-            logging.debug("Horizontal")
-            for y in range(imheight):
-                for x in range(imwidth):
-                    # Set the bits for the column of pixels at the current position.
-                    if pixels[x, y] == 0:
-                        buf[int((x + y * self.width) / 8)] &= ~(0x80 >> (x % 8))
-        elif (imwidth == self.height and imheight == self.width):
-            logging.debug("Vertical")
-            for y in range(imheight):
-                for x in range(imwidth):
-                    newx = y
-                    newy = self.height - x - 1
-                    if pixels[x, y] == 0:
-                        buf[int((newx + newy * self.width) / 8)] &= ~(0x80 >> (y % 8))
+        for y in range(self.height):
+            for x in range(self.width):
+                # Set the bits for the column of pixels at the current position.
+                if pixels[x, y] == 0:
+                    buf[int((x + y * self.width) / 8)] &= ~(0x80 >> (x % 8))
         return buf
 
     def display(self, imageblack, imagered):
