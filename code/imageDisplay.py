@@ -10,7 +10,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from epd_driver import epd4in2_GD
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 
 
