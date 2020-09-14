@@ -24,7 +24,7 @@ try:
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
-    Himage = Image.open(os.path.join(picdir, '2020年9月14日日历400_300.bmp'))
+    Himage = Image.open(os.path.join(picdir, 'calender_black.bmp'))
     epd.display(epd.getbuffer(Himage))
 
 
