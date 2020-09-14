@@ -25,7 +25,9 @@ try:
 
     logging.info(".read calender bmp file")
     Himage = Image.open(os.path.join(picdir, 'calender_black.bmp'))
-    epd.displayBlack(epd.getbuffer(Himage))
+    flipImg = Himage.transpose(Image.FLIP_LEFT_RIGHT)
+    rotateImg = flipImg.rotate(180)
+    epd.displayBlack(epd.getbuffer(rotateImg))
 
 
 except IOError as e:
