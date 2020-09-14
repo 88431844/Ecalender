@@ -25,7 +25,7 @@ try:
 
     logging.info(".read calender bmp file")
     Himage = Image.open(os.path.join(picdir, 'calender_black.bmp'))
-    epd.display(epd.getbuffer(Himage))
+    epd.displayBlack(epd.getbuffer(Himage))
 
 
 except IOError as e:
