@@ -38,8 +38,8 @@ def drawMonth(year=2020, month=1):
             draw.text((colSpace, rowSpace), u' ' + MONTH[month - 1], fill=(0, 0, 0,),
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 7.5, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
         draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=(0, 0, 0),
