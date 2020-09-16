@@ -1,6 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 import calendar
+import os
 
+fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
 def drawMonth(month=1):
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
@@ -22,10 +24,10 @@ def drawMonth(month=1):
     # img.paste(bgImg, box=(width-bgWidth, 0))
 
     # define font and size
-    month_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
-    week_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
-    day_work_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
-    day_rest_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-f930.ttc'
+    month_font = fontPath + r'\font-old.ttc'
+    week_font = fontPath + r'\font-old.ttc'
+    day_work_font = fontPath + r'\font-old.ttc'
+    day_rest_font = fontPath + r'\font-f930.ttc'
     month_size, title_size, day_size = 80, 60, 60
 
     draw = ImageDraw.Draw(img)
