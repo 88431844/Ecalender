@@ -4,7 +4,7 @@ import os
 
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
-def drawMonth(month=1):
+def drawMonth(year=2020,month=1):
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
     MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
              '七月', '八月', '九月', '十月', '十一月', '十二月')
@@ -47,7 +47,7 @@ def drawMonth(month=1):
     # draw days
     cal = calendar.Calendar(firstweekday=0)
     row, col = 3, 1
-    for day in cal.itermonthdays(2019, month):
+    for day in cal.itermonthdays(year, month):
         if day > 0:
             # if weekday, draw with red color
             if col == 6 or col == 7:
@@ -70,4 +70,4 @@ def drawMonth(month=1):
 
 
 if __name__ == '__main__':
-    drawMonth(month=4)
+    drawMonth(year=2020,month=9)
