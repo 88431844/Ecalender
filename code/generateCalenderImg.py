@@ -3,9 +3,9 @@ import calendar
 
 
 def drawMonth(month=1):
-    WEEK = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
-    MONTH = ('January', 'February', 'March', 'April', 'May', 'June',
-             'July', 'August', 'September', 'October', 'November', 'December')
+    WEEK = ('周一', '周二', '周三', '周四', '周五', '周六', '周日')
+    MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
+             '七月', '八月', '九月', '十月', '十一月', '十二月')
 
     # create new blank picture
     img = Image.new('RGB', size=(1920, 1080), color=(255, 255, 255))
@@ -22,24 +22,25 @@ def drawMonth(month=1):
     # img.paste(bgImg, box=(width-bgWidth, 0))
 
     # define font and size
-    month_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-f930.ttc'
-    title_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-f930.ttc'
-    day_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-f930.ttc'
+    month_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
+    week_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
+    day_work_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-old.ttc'
+    day_rest_font = r'C:\Users\GW00191732\PycharmProjects\Ecalender\font\font-f930.ttc'
     month_size, title_size, day_size = 80, 60, 60
 
     draw = ImageDraw.Draw(img)
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            draw.text((colSpace, rowSpace), MONTH[month - 1], fill=(0, 0, 0,),
+            draw.text((colSpace, rowSpace), u' ' + MONTH[month - 1], fill=(0, 0, 0,),
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 7.5, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
             continue
         # draw week title
-        draw.text((colSpace * i, rowSpace * 2), WEEK[i - 1], fill=(0, 0, 0),
-                  font=ImageFont.truetype(title_font, size=title_size))
+        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=(0, 0, 0),
+                  font=ImageFont.truetype(week_font, size=title_size))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
@@ -49,8 +50,10 @@ def drawMonth(month=1):
             # if weekday, draw with red color
             if col == 6 or col == 7:
                 fill = (255, 0, 0)
+                day_font = day_rest_font
             else:
                 fill = (0, 0, 0)
+                day_font = day_work_font
             draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
                       font=ImageFont.truetype(day_font, size=day_size))
         col += 1
