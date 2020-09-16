@@ -15,7 +15,7 @@ def drawMonth(year=2020,month=1):
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
     # rows, cols = 9, len(WEEK) + 4
-    rows, cols = 7, len(WEEK) + 2
+    rows, cols = 8, len(WEEK) + 2
     colSpace, rowSpace = width // cols, height // rows
 
     # paste your img on the right, 549*1080
