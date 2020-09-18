@@ -1,6 +1,8 @@
 from PIL import Image, ImageDraw, ImageFont
 import calendar
 import os
+import requests
+import json
 
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
@@ -35,7 +37,9 @@ def drawMonth(year=2020, month=1):
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            draw.text((colSpace, rowSpace), u' ' + MONTH[month - 1], fill=(0, 0, 0,),
+            temperature, weather = getWeather()
+            draw.text((colSpace, rowSpace), u' ' + MONTH[month - 1] + u'|温度:' + temperature + u'|天气:' + weather,
+                      fill=(0, 0, 0,),
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
             draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
@@ -68,6 +72,16 @@ def drawMonth(year=2020, month=1):
     img = img.resize((400, 300), Image.ANTIALIAS)
     # img.save(MONTH[month-1] + '.png')
     img.show()
+
+
+def getWeather():
+    r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=110105&key=446bdde0691cffb14c1aff83a8912467')
+    r.encoding = 'utf-8'
+    weatherData = json.loads(r.text.encode('utf-8'))
+    w = weatherData['lives'][0]
+    temperature = str(w['temperature'].encode('utf-8'), 'utf-8')
+    weather = str(w['weather'].encode('utf-8'), 'utf-8')
+    return temperature, weather
 
 
 if __name__ == '__main__':
