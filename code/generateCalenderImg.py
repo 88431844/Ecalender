@@ -31,17 +31,22 @@ def drawMonth(year=2020, month=1):
 
     # define font and size
     month_font = fontPath + r'\font-old.ttc'
+    weather_font = fontPath + r'\font-old.ttc'
     week_font = fontPath + r'\font-old.ttc'
     day_work_font = fontPath + r'\font-old.ttc'
     day_rest_font = fontPath + r'\font-f930.ttc'
-    month_size, title_size, day_size = 80, 60, 60
+    month_size, title_size, day_size,weather_size = 80, 60, 60,50
+
 
     draw = ImageDraw.Draw(img)
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            temperature, weather = getWeather()
-            draw.text((colSpace, rowSpace), u' ' + MONTH[month - 1] + u'|温度:' + temperature + u'|天气:' + weather,
+            temperature, weather,reportTime = getWeather()
+            draw.text((colSpace,rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather +u'|最后更新:'+ reportTime,
+                      fill=(0, 0, 0,),
+                      font=ImageFont.truetype(weather_font, size=weather_size))
+            draw.text((colSpace , rowSpace - 80), u' ' + MONTH[month - 1] ,
                       fill=(0, 0, 0,),
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
@@ -97,7 +102,8 @@ def getWeather():
     w = weatherData['lives'][0]
     temperature = str(w['temperature'].encode('utf-8'), 'utf-8')
     weather = str(w['weather'].encode('utf-8'), 'utf-8')
-    return temperature, weather
+    reportTime = str(w['reporttime'].encode('utf-8'), 'utf-8')
+    return temperature, weather, reportTime
 
 
 if __name__ == '__main__':
