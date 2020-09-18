@@ -7,6 +7,7 @@ import json
 import logging
 import time
 import sys
+import traceback
 
 from epd_driver import epd4in2_GD
 from PIL import Image, ImageDraw, ImageFont
