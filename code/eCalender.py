@@ -25,7 +25,7 @@ try:
     epd = epd4in2_GD.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
+    epd.ClearBlack()
     logging.info("Clear done")
 
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')

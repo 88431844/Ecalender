@@ -20,7 +20,7 @@ try:
     epd = epd4in2_GD.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
+    epd.ClearBlack()
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
