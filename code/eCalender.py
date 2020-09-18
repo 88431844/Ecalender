@@ -23,9 +23,9 @@ def getWeather():
     r.encoding = 'utf-8'
     weatherData = json.loads(r.text.encode('utf-8'))
     w = weatherData['lives'][0]
-    temperature = str(w['temperature'].encode('utf-8'), 'utf-8')
+    temperature = str(w['temperature'].encode('utf-8'))
     weather = str(w['weather'].encode('utf-8'))
-    reportTime = str(w['reporttime'].encode('utf-8'), 'utf-8')
+    reportTime = str(w['reporttime'].encode('utf-8'))
     return temperature, weather, reportTime
 
 try:
