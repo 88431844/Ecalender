@@ -46,7 +46,7 @@ try:
     month = time.strftime('%m')
 
     # create new blank picture
-    img = Image.new('RGB', size=(1920, 1080), color=(255, 255, 255))
+    img = Image.new('1', size=(1920, 1080), color=(0, 0, 0))
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -94,7 +94,7 @@ try:
         if day > 0:
             # if weekday, draw with red color
             if col == 6 or col == 7:
-                fill = (255, 0, 0)
+                fill = (0, 0, 0)
                 day_font = day_rest_font
             else:
                 fill = (0, 0, 0)
