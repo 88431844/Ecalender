@@ -11,6 +11,8 @@ import sys
 from epd_driver import epd4in2_GD
 from PIL import Image, ImageDraw, ImageFont
 
+reload(sys)
+sys.setdefaultencoding('utf8')
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
