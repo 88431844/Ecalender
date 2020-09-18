@@ -16,7 +16,7 @@ def drawMonth(year=2020, month=1):
              '七月', '八月', '九月', '十月', '十一月', '十二月')
 
     # create new blank picture
-    img = Image.new('RGB', size=(1920, 1080), color=(255, 255, 255))
+    img = Image.new('1', size=(1920, 1080), color=255)
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -35,7 +35,7 @@ def drawMonth(year=2020, month=1):
     week_font = fontPath + r'\font-old.ttc'
     day_work_font = fontPath + r'\font-old.ttc'
     day_rest_font = fontPath + r'\font-f930.ttc'
-    month_size, title_size, day_size,weather_size = 80, 60, 60,50
+    month_size, title_size, day_size,weather_size = 80, 60, 60,60
 
 
     draw = ImageDraw.Draw(img)
@@ -44,17 +44,17 @@ def drawMonth(year=2020, month=1):
         if i == 0:
             temperature, weather,reportTime = getWeather()
             draw.text((colSpace,rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather +u'|最后更新:'+ reportTime,
-                      fill=(0, 0, 0,),
+                      fill=0,
                       font=ImageFont.truetype(weather_font, size=weather_size))
             draw.text((colSpace , rowSpace - 80), u' ' + MONTH[month - 1] ,
-                      fill=(0, 0, 0,),
+                      fill=0,
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=0)
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=0)
             continue
         # draw week title
-        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=(0, 0, 0),
+        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=0,
                   font=ImageFont.truetype(week_font, size=title_size))
 
     # draw days
@@ -65,10 +65,10 @@ def drawMonth(year=2020, month=1):
         if day > 0:
             # if weekday, draw with red color
             if col == 6 or col == 7:
-                fill = (255, 0, 0)
+                fill = 0
                 day_font = day_rest_font
             else:
-                fill = (0, 0, 0)
+                fill = 0
                 day_font = day_work_font
             draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
                       font=ImageFont.truetype(day_font, size=day_size))
