@@ -8,6 +8,8 @@ import time
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
 
+#保定 莲池区 130606
+
 def drawMonth(year=2020, month=1):
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
     MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
@@ -89,7 +91,7 @@ def drawMonth(year=2020, month=1):
 
 
 def getWeather():
-    r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=110105&key=446bdde0691cffb14c1aff83a8912467')
+    r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=130606&key=446bdde0691cffb14c1aff83a8912467')
     r.encoding = 'utf-8'
     weatherData = json.loads(r.text.encode('utf-8'))
     w = weatherData['lives'][0]
