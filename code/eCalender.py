@@ -6,11 +6,15 @@ import requests
 import json
 import logging
 import time
+import sys
 
 from epd_driver import epd4in2_GD
 from PIL import Image, ImageDraw, ImageFont
 
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
+libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+if os.path.exists(libdir):
+    sys.path.append(libdir)
 
 try:
     logging.info("eCalender")
