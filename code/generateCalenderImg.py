@@ -3,6 +3,7 @@ import calendar
 import os
 import requests
 import json
+import time
 
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
@@ -52,6 +53,7 @@ def drawMonth(year=2020, month=1):
     # draw days
     cal = calendar.Calendar(firstweekday=0)
     row, col = 3, 1
+    nowDay = time.strftime('%d')
     for day in cal.itermonthdays(year, month):
         if day > 0:
             # if weekday, draw with red color
@@ -63,11 +65,23 @@ def drawMonth(year=2020, month=1):
                 day_font = day_work_font
             draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
                       font=ImageFont.truetype(day_font, size=day_size))
+        # 判断输出日期是否为当天，是则在下面话点标识
+        if nowDay == str(day):
+            shape = [(colSpace * col + day_size + 20, rowSpace * row + 80),
+                     (colSpace * col + day_size + 40, rowSpace * row + 60)]
+            draw.rectangle(shape, fill=0)
+
         col += 1
         # to a new week
         if col == 8:
             col = 1
             row += 1
+
+        # print("x:" + str(colSpace * col + day_size), "y:" + str(rowSpace * row))
+        # print("nowDay:" + nowDay ,"day:" + str(day))
+
+    # shape = [(1551 + 20, 405 + 80), (1551 + 40 , 405 + 60)]
+    # draw.rectangle(shape, fill=0)
 
     img = img.resize((400, 300), Image.ANTIALIAS)
     # img.save(MONTH[month-1] + '.png')
