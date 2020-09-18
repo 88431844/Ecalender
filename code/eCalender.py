@@ -18,6 +18,16 @@ import time
 
 from PIL import Image, ImageDraw, ImageFont
 
+def getWeather():
+    r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=130606&key=446bdde0691cffb14c1aff83a8912467')
+    r.encoding = 'utf-8'
+    weatherData = json.loads(r.text.encode('utf-8'))
+    w = weatherData['lives'][0]
+    temperature = str(w['temperature'].encode('utf-8'), 'utf-8')
+    weather = str(w['weather'].encode('utf-8'), 'utf-8')
+    reportTime = str(w['reporttime'].encode('utf-8'), 'utf-8')
+    return temperature, weather, reportTime
+
 try:
     logging.info("eCalender")
 
@@ -30,6 +40,10 @@ try:
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
     MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
              '七月', '八月', '九月', '十月', '十一月', '十二月')
+
+    nowDay = time.strftime('%d')
+    year = time.strftime('%y')
+    month = time.strftime('%m')
 
     # create new blank picture
     img = Image.new('RGB', size=(1920, 1080), color=(255, 255, 255))
@@ -75,9 +89,7 @@ try:
     # draw days
     cal = calendar.Calendar(firstweekday=0)
     row, col = 3, 1
-    nowDay = time.strftime('%d')
-    year = time.strftime('%y')
-    month = time.strftime('%m')
+
     for day in cal.itermonthdays(year, month):
         if day > 0:
             # if weekday, draw with red color
@@ -119,3 +131,6 @@ except KeyboardInterrupt:
     logging.info("ctrl + c:")
     epd4in2_GD.epdconfig.module_exit()
     exit()
+
+
+
