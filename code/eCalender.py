@@ -46,7 +46,7 @@ try:
     month = time.strftime('%m')
 
     # create new blank picture
-    img = Image.new('1', size=(1920, 1080), color=(0, 0, 0))
+    img = Image.new('1', size=(1920, 1080), color=255)
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -79,11 +79,11 @@ try:
                       fill=(0, 0, 0,),
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=(0, 0, 0))
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=(0, 0, 0))
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=0)
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=0)
             continue
         # draw week title
-        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=(0, 0, 0),
+        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=0,
                   font=ImageFont.truetype(week_font, size=title_size))
 
     # draw days
@@ -94,10 +94,10 @@ try:
         if day > 0:
             # if weekday, draw with red color
             if col == 6 or col == 7:
-                fill = (0, 0, 0)
+                fill = 0
                 day_font = day_rest_font
             else:
-                fill = (0, 0, 0)
+                fill = 0
                 day_font = day_work_font
             draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
                       font=ImageFont.truetype(day_font, size=day_size))
