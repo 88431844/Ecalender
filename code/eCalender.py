@@ -41,9 +41,12 @@ try:
     MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
              '七月', '八月', '九月', '十月', '十一月', '十二月')
 
-    nowDay = time.strftime('%d')
-    year = time.strftime('%y')
-    month = time.strftime('%m')
+    # nowDay = time.strftime('%d')
+    # year = time.strftime('%y')
+    # month = time.strftime('%m')
+    nowDay = 18
+    year = 2020
+    month = 9
 
     # create new blank picture
     img = Image.new('1', size=(1920, 1080), color=255)
