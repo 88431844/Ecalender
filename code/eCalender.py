@@ -122,6 +122,7 @@ try:
     img = img.resize((400, 300), Image.ANTIALIAS)
     flipImg = img.transpose(Image.FLIP_LEFT_RIGHT)
     rotateImg = flipImg.rotate(180)
+    rotateImg.save('i.png')
     epd.displayBlack(epd.getbuffer(rotateImg))
 
 except IOError as e:
