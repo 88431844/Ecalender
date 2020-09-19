@@ -8,7 +8,7 @@ import time
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 
 
-#保定 莲池区 130606
+# 保定 莲池区 130606
 
 def drawMonth(year=2020, month=1):
     WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
@@ -16,7 +16,7 @@ def drawMonth(year=2020, month=1):
              '七月', '八月', '九月', '十月', '十一月', '十二月')
 
     # create new blank picture
-    img = Image.new('1', size=(1920, 1080), color=255)
+    img = Image.new('1', size=(400, 300), color=255)
     width, height = img.size
     # rows = 2 titles + 5 rows of days + 2(head + footer)blank
     # cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -33,29 +33,28 @@ def drawMonth(year=2020, month=1):
     month_font = fontPath + r'\font-old.ttc'
     weather_font = fontPath + r'\font-old.ttc'
     week_font = fontPath + r'\font-old.ttc'
-    day_work_font = fontPath + r'\font-old.ttc'
-    day_rest_font = fontPath + r'\font-f930.ttc'
-    month_size, title_size, day_size,weather_size = 80, 60, 60,60
-
+    day_work_font = fontPath + r'\font-f930.ttc'
+    day_rest_font = fontPath + r'\font-old.ttc'
+    month_size, week_size, day_size, weather_size = 16, 13, 16, 13
 
     draw = ImageDraw.Draw(img)
     for i in range(len(WEEK) + 1):
         # draw month title
         if i == 0:
-            temperature, weather,reportTime = getWeather()
-            draw.text((colSpace,rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather +u'|最后更新:'+ reportTime,
+            temperature, weather, reportTime = getWeather()
+            draw.text((colSpace, rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather + u'|最后更新:' + reportTime,
                       fill=0,
                       font=ImageFont.truetype(weather_font, size=weather_size))
-            draw.text((colSpace , rowSpace - 80), u' ' + MONTH[month - 1] ,
+            draw.text((colSpace, rowSpace ), u' ' + MONTH[month - 1],
                       fill=0,
                       font=ImageFont.truetype(month_font, size=month_size))
             top = rowSpace // 10
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2), (colSpace * 8, rowSpace * 2 - top * 2)], fill=0)
-            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 8, rowSpace * 2 - top * 1)], fill=0)
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 2 + 5), (colSpace * 8, rowSpace * 2 - top * 2 + 5)], fill=0)
+            draw.line(xy=[(colSpace, rowSpace * 2 - top * 1 + 5), (colSpace * 8, rowSpace * 2 - top * 1 + 5)], fill=0)
             continue
         # draw week title
-        draw.text((colSpace * i, rowSpace * 2), u' ' + WEEK[i - 1], fill=0,
-                  font=ImageFont.truetype(week_font, size=title_size))
+        draw.text((colSpace * i , rowSpace * 2 + 10 ), u' ' + WEEK[i - 1], fill=0,
+                  font=ImageFont.truetype(week_font, size=week_size))
 
     # draw days
     cal = calendar.Calendar(firstweekday=0)
@@ -74,8 +73,8 @@ def drawMonth(year=2020, month=1):
                       font=ImageFont.truetype(day_font, size=day_size))
         # 判断输出日期是否为当天，是则在下面话点标识
         if nowDay == str(day):
-            shape = [(colSpace * col + day_size + 20, rowSpace * row + 80),
-                     (colSpace * col + day_size + 40, rowSpace * row + 60)]
+            shape = [(colSpace * col + day_size + 5, rowSpace * row + 25),
+                     (colSpace * col + day_size + 10, rowSpace * row + 20)]
             draw.rectangle(shape, fill=0)
 
         col += 1
@@ -90,7 +89,7 @@ def drawMonth(year=2020, month=1):
     # shape = [(1551 + 20, 405 + 80), (1551 + 40 , 405 + 60)]
     # draw.rectangle(shape, fill=0)
 
-    img = img.resize((400, 300), Image.ANTIALIAS)
+    # img = img.resize((400, 300), Image.ANTIALIAS)
     # img.save(MONTH[month-1] + '.png')
     img.show()
 
