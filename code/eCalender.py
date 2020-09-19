@@ -53,6 +53,9 @@ try:
 
 	# create new blank picture
 	img = Image.new('1', (epd.width, epd.height), 255)
+	HRYimage = Image.new('1', (epd.width, epd.height), 255)  # 298*126  ryimage: red or yellow image
+	drawry = ImageDraw.Draw(HRYimage)
+	drawry.rectangle((80, 50, 130, 100), fill=0)
 	width, height = img.size
 	# rows = 2 titles + 5 rows of days + 2(head + footer)blank
 	# cols = 7 cols of week + 1 blank for left + 3 col for pic
@@ -130,7 +133,8 @@ try:
 
 	flipImg = img.transpose(Image.FLIP_LEFT_RIGHT)
 	rotateImg = flipImg.rotate(180)
-	epd.displayBlack(epd.getbuffer(rotateImg))
+	# epd.displayBlack(epd.getbuffer(rotateImg))
+	epd.display(epd.getbuffer(rotateImg),epd.getbuffer(HRYimage))
 
 
 except IOError as e:
