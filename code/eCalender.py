@@ -1,12 +1,17 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-import sys, requests, json, datetime
-import os
+from PIL import Image, ImageDraw, ImageFont
 import calendar
+import os
+import requests
+import json
+import time
+import sys
 
 reload(sys)
 sys.setdefaultencoding('utf8')
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
+
+fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
@@ -16,85 +21,117 @@ from epd_driver import epd4in2_GD
 import time
 from PIL import Image, ImageDraw, ImageFont
 
+logging.basicConfig(level=logging.DEBUG)
+
+def getWeather():
+    r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=130606&key=446bdde0691cffb14c1aff83a8912467')
+    r.encoding = 'utf-8'
+    weatherData = json.loads(r.text.encode('utf-8'))
+    w = weatherData['lives'][0]
+    temperature = str(w['temperature'].encode('utf-8'))
+    weather = str(w['weather'].encode('utf-8'))
+    reportTime = str(w['reporttime'].encode('utf-8'))
+    return temperature, weather, reportTime
+
+
 try:
-    logging.info("eCalender")
+	logging.info("eCalender")
 
-    epd = epd4in2_GD.EPD()
-    logging.info("init and Clear")
-    epd.init()
-    epd.Clear()
-    logging.info("Clear done")
+	epd = epd4in2_GD.EPD()
+	logging.info("init and Clear")
+	epd.init()
+	epd.Clear()
+	logging.info("Clear done")
 
-    font = ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87)
+	month = int(time.strftime('%m'))
+	year = int(time.strftime('%y'))
+	nowDay = int(time.strftime('%d'))
 
-    calender_image = Image.new('1', (epd.width, epd.height), 255)
-    calender_draw = ImageDraw.Draw(calender_image)
-    # time_draw = ImageDraw.Draw(calender_image)
-    # time_draw.text((0, 0), time.strftime('%H:%M'), font=font, fill=0)
-    # # epd.displayBlack(epd.getbuffer(calender_image.rotate(270).transpose(Image.FLIP_LEFT_RIGHT)))
-    #
-    # flipImg = calender_image.transpose(Image.FLIP_LEFT_RIGHT)
-    # rotateImg = flipImg.rotate(180)
-    # epd.displayBlack(epd.getbuffer(rotateImg))
+	WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
+	MONTH = ('一月', '二月', '三月', '四月', '五月', '六月',
+			 '七月', '八月', '九月', '十月', '十一月', '十二月')
 
-    month=9
-    WEEK = ('MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN')
-    MONTH = ('January', 'February', 'March', 'April', 'May', 'June',
-             'July', 'August', 'September', 'October', 'November', 'December')
+	# create new blank picture
+	img = Image.new('1', (epd.width, epd.height), 255)
+	width, height = img.size
+	# rows = 2 titles + 5 rows of days + 2(head + footer)blank
+	# cols = 7 cols of week + 1 blank for left + 3 col for pic
+	# rows, cols = 9, len(WEEK) + 4
+	rows, cols = 8, len(WEEK) + 2
+	colSpace, rowSpace = width // cols, height // rows
 
-    # create new blank picture
-    # img = Image.new('RGB', size=(1920, 1080), color=(255,255,255))
-    width, height = calender_image.size
+	# paste your img on the right, 549*1080
+	# bgImg = Image.open('cat1.jpg')
+	# bgWidth, _ = bgImg.size
+	# img.paste(bgImg, box=(width-bgWidth, 0))
 
-    # rows = 2 titles + 5 rows of days + 2(head + footer)blank
-    # cols = 7 cols of week + 1 blank for left + 3 col for pic
-    rows, cols = 9, len(WEEK) + 4
-    colSpace, rowSpace = width // cols, height // rows
+	# define font and size
+	month_font = os.path.join(fontPath, 'font-old.ttc')
+	weather_font = os.path.join(fontPath, 'font-old.ttc')
+	week_font = os.path.join(fontPath, 'font-old.ttc')
+	day_work_font = os.path.join(fontPath, 'font-f930.ttc')
+	day_rest_font = os.path.join(fontPath, 'font-old.ttc')
+	month_size, week_size, day_size, weather_size = 16, 13, 16, 13
 
-    # paste your img on the right, 549*1080
-    # bgImg = Image.open('cat1.jpg')
-    # bgWidth, _ = bgImg.size
-    # img.paste(bgImg, box=(width-bgWidth, 0))
+	draw = ImageDraw.Draw(img)
+	for i in range(len(WEEK) + 1):
+		# draw month title
+		if i == 0:
+			temperature, weather, reportTime = getWeather()
+			draw.text((colSpace, rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather + u'|最后更新:' + reportTime,
+                      fill=0,
+                      font=ImageFont.truetype(weather_font, size=weather_size))
+			draw.text((colSpace, rowSpace ), u' ' + MONTH[month - 1],
+					  fill=0,
+					  font=ImageFont.truetype(month_font, size=month_size))
+			top = rowSpace // 10
+			draw.line(xy=[(colSpace, rowSpace * 2 - top * 2 + 5), (colSpace * 8, rowSpace * 2 - top * 2 + 5)], fill=0)
+			draw.line(xy=[(colSpace, rowSpace * 2 - top * 1 + 5), (colSpace * 8, rowSpace * 2 - top * 1 + 5)], fill=0)
+			continue
+		# draw week title
+		draw.text((colSpace * i , rowSpace * 2 + 10 ), u' ' + WEEK[i - 1], fill=0,
+				  font=ImageFont.truetype(week_font, size=week_size))
 
-    # define font and size
-    # font = ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 87)
-    # month_font = r'C:\Windows\Fonts\BAUHS93.TTF'
-    # title_font = r'C:\Windows\Fonts\STCAIYUN.TTF'
-    # day_font = r'C:\Windows\Fonts\SitkaB.ttc'
-    # month_size, title_size, day_size = 80, 58, 34
+	# draw days
+	cal = calendar.Calendar(firstweekday=0)
+	row, col = 3, 1
+	nowDay = time.strftime('%d')
+	for day in cal.itermonthdays(year, month):
+		if day > 0:
+			# if weekday, draw with red color
+			if col == 6 or col == 7:
+				fill = 0
+				day_font = day_rest_font
+			else:
+				fill = 0
+				day_font = day_work_font
+			draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
+					  font=ImageFont.truetype(day_font, size=day_size))
+		# 判断输出日期是否为当天，是则在下面话点标识
+		if nowDay == str(day):
+			shape = [(colSpace * col + day_size + 5, rowSpace * row + 25),
+					 (colSpace * col + day_size + 10, rowSpace * row + 20)]
+			draw.rectangle(shape, fill=0)
 
-    # draw = ImageDraw.Draw(img)
-    for i in range(len(WEEK) + 1):
-        # draw month title
-        if i == 0:
-            calender_draw.text((colSpace, rowSpace), MONTH[month-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
-            top = rowSpace // 10
-            calender_draw.line(xy=[(colSpace, rowSpace*2-top * 2), (colSpace*7.5, rowSpace*2-top * 2)], fill=0)
-            calender_draw.line(xy=[(colSpace, rowSpace * 2 - top * 1), (colSpace * 7.5, rowSpace * 2 - top * 1)], fill=0)
-            continue
-        # draw week title
-        calender_draw.text((colSpace*i, rowSpace*2), WEEK[i-1], fill=0, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 10))
+		col += 1
+		# to a new week
+		if col == 8:
+			col = 1
+			row += 1
 
-    # draw days
-    cal = calendar.Calendar(firstweekday=0)
-    row, col = 3, 1
-    for day in cal.itermonthdays(2020, month):
-        if day > 0:
-            # if weekday, draw with red color
-            if col == 6 or col == 7:
-                fill = 0
-            else:
-                fill = 0
-            calender_draw.text((colSpace * col + 34, rowSpace * row), str(day), fill=fill, font=ImageFont.truetype(os.path.join(picdir, 'font-f930.ttc'), 16))
-        col += 1
-        # to a new week
-        if col == 8:
-            col = 1
-            row += 1
+		# print("x:" + str(colSpace * col + day_size), "y:" + str(rowSpace * row))
+		# print("nowDay:" + nowDay ,"day:" + str(day))
 
-    flipImg = calender_image.transpose(Image.FLIP_LEFT_RIGHT)
-    rotateImg = flipImg.rotate(180)
-    epd.displayBlack(epd.getbuffer(rotateImg))
+	# shape = [(1551 + 20, 405 + 80), (1551 + 40 , 405 + 60)]
+	# draw.rectangle(shape, fill=0)
+
+	# img = img.resize((400, 300), Image.ANTIALIAS)
+	# img.save(MONTH[month-1] + '.png')
+
+	flipImg = img.transpose(Image.FLIP_LEFT_RIGHT)
+	rotateImg = flipImg.rotate(180)
+	epd.displayBlack(epd.getbuffer(rotateImg))
+
 
 except IOError as e:
     logging.info(e)
