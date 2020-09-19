@@ -12,7 +12,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from epd_driver import epd4in2bc
+from epd_driver import epd4in2_GD
 import time
 from PIL import Image, ImageDraw, ImageFont
 
