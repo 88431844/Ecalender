@@ -46,6 +46,7 @@ try:
 
 	month = int(time.strftime('%m'))
 	year = int(time.strftime('%y'))
+	nowDay = int(time.strftime('%y'))
 
 	WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
 	MONTH = ('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
@@ -92,7 +93,6 @@ try:
 	# draw days
 	cal = calendar.Calendar(firstweekday=0)
 	row, col = 3, 1
-	nowDay = time.strftime('%d')
 	for day in cal.itermonthdays(year, month):
 		if day > 0:
 			# if weekday, draw with red color
@@ -106,7 +106,7 @@ try:
 				               font=ImageFont.truetype(day_font, size=day_size))
 
 		# 判断输出日期是否为当天，是则在下面画红色方框标识
-		if nowDay == str(day):
+		if nowDay == int(day):
 			xx = colSpace * col + 11
 			yy = rowSpace * row + 22
 			size = 30
