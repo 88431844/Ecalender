@@ -34,6 +34,7 @@ def getWeather():
 	weather = str(w['weather'].encode('utf-8'))
 	reportTime = str(w['reporttime'].encode('utf-8'))
 	city = str(w['city'].encode('utf-8'))
+	logging.info("getWeather:", temperature, weather, reportTime, city)
 	return temperature, weather, reportTime, city
 
 
@@ -60,6 +61,8 @@ def getWeatherMore():
 		todayDayTemp = casts[0]['daytemp']
 	except:
 		return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
+	logging.info("getWeatherMore:", tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp,
+	             todayDayTemp)
 	return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
 
 
@@ -101,10 +104,6 @@ try:
 
 	temperature, weather, reportTime, city = getWeather()
 	tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp = getWeatherMore()
-
-	logging.info("weather:" + weather)
-	logging.info("todayWeather:" + todayWeather)
-
 
 	for i in range(len(WEEK) + 1):
 		# draw month title
@@ -167,7 +166,7 @@ try:
 
 	# 添加天气图标
 	bmp_name = {u'晴': 'WQING.BMP', u'阴': 'WYIN.BMP', u'多云': 'WDYZQ.BMP',
-	            u'雷阵雨': 'WLZYU.BMP', u'小雨': 'WXYU.BMP', u'中雨': 'WXYU.BMP'}.get(weather, None)
+	            u'雷阵雨': 'WLZYU.BMP', u'小雨': 'WXYU.BMP', u'中雨': 'WXYU.BMP'}.get(u'' + weather, None)
 	if not bmp_name:
 		if u'雨' in weather:
 			bmp_name = 'WYU.BMP'
