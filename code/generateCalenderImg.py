@@ -71,11 +71,15 @@ def drawMonth(year=2020, month=1):
                 day_font = day_work_font
             draw.text((colSpace * col + day_size, rowSpace * row), str(day), fill=fill,
                       font=ImageFont.truetype(day_font, size=day_size))
-        # 判断输出日期是否为当天，是则在下面话点标识
+        # 判断输出日期是否为当天，是则在下面画红色方框标识
         if nowDay == str(day):
-            shape = [(colSpace * col + day_size + 5, rowSpace * row + 25),
-                     (colSpace * col + day_size + 10, rowSpace * row + 20)]
-            draw.rectangle(shape, fill=0)
+            xx = colSpace * col + 11
+            yy = rowSpace * row + 22
+            size = 30
+            draw.line(xy=[(xx, yy), (xx + size, yy)], fill=0)
+            draw.line(xy=[(xx, yy), (xx, yy - size)], fill=0)
+            draw.line(xy=[(xx, yy - size), (xx + size, yy - size)], fill=0)
+            draw.line(xy=[(xx + size, yy - size), (xx + size, yy)], fill=0)
 
         col += 1
         # to a new week
