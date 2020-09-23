@@ -34,7 +34,6 @@ def getWeather():
 	weather = str(w['weather'].encode('utf-8'))
 	reportTime = str(w['reporttime'].encode('utf-8'))
 	city = str(w['city'].encode('utf-8'))
-	logging.info("getWeather:", temperature, weather, reportTime, city)
 	return temperature, weather, reportTime, city
 
 
@@ -61,8 +60,6 @@ def getWeatherMore():
 		todayDayTemp = casts[0]['daytemp']
 	except:
 		return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
-	logging.info("getWeatherMore:", tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp,
-	             todayDayTemp)
 	return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
 
 
@@ -117,7 +114,7 @@ try:
 			blackDraw.text((90, 40), u'' + weather,
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
-			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u' 最低 ' + todayNightTemp,
+			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u' 最低 ' + todayNightTemp + u'更新时间 '+reportTime,
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
 			blackDraw.text((colSpace, 30), u' ' + MONTH[month - 1],
