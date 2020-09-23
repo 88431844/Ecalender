@@ -53,9 +53,6 @@ def drawMonth(year=2020, month=1):
 			draw.text((100, 40), u'' + weather,
 			          fill=0,
 			          font=ImageFont.truetype(weather_font, size=weather_size))
-			# draw.text((100, 55),  u'更新时间:' + reportTime[10:16],
-			#           fill=0,
-			#           font=ImageFont.truetype(weather_font, size=weather_size))
 			draw.text((100, 55), u'最高 ' + todayDayTemp + u' 最低 ' + todayNightTemp,
 			          fill=0,
 			          font=ImageFont.truetype(weather_font, size=weather_size))
