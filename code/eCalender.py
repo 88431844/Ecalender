@@ -102,6 +102,10 @@ try:
 	temperature, weather, reportTime, city = getWeather()
 	tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp = getWeatherMore()
 
+	logging.info("weather:" + weather)
+	logging.info("todayWeather:" + todayWeather)
+
+
 	for i in range(len(WEEK) + 1):
 		# draw month title
 		if i == 0:
@@ -174,7 +178,9 @@ try:
 		elif u'雾' in weather or u'霾' in weather:
 			bmp_name = 'WWU.BMP'
 
+	logging.info("bmp_name:" + bmp_name)
 	imgPath = weatherImgPath + r'/' + bmp_name
+	logging.info("imgPath:" + imgPath)
 	weatherImg = Image.open(imgPath)
 	newWeatherImg = weatherImg.resize((40, 40), Image.ANTIALIAS)
 	blackImg.paste(newWeatherImg, box=(140, 10))
