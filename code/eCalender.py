@@ -74,7 +74,7 @@ try:
 		# draw month title
 		if i == 0:
 			temperature, weather, reportTime = getWeather()
-			blackDraw.text((colSpace, rowSpace + 20), u'温度:' + temperature + u'|天气:' + weather + u'|最后更新:' + reportTime,
+			blackDraw.text((colSpace, rowSpace + 20),  temperature + u'°C|' + weather + u'|最后更新:' + reportTime[10:16],
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
 			blackDraw.text((colSpace, rowSpace), u' ' + MONTH[month - 1],
