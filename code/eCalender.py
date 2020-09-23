@@ -12,6 +12,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 fontPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'font')
+weatherImgPath = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'weatherImg')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
 	sys.path.append(libdir)
@@ -32,7 +33,34 @@ def getWeather():
 	temperature = str(w['temperature'].encode('utf-8'))
 	weather = str(w['weather'].encode('utf-8'))
 	reportTime = str(w['reporttime'].encode('utf-8'))
-	return temperature, weather, reportTime
+	city = str(w['city'].encode('utf-8'))
+	return temperature, weather, reportTime, city
+
+
+def getWeatherMore():
+	tomorrowWeather = "00"
+	tomorrowNightTemp = "00"
+	tomorrowDayTemp = "00"
+	todayWeather = "00"
+	todayNightTemp = "00"
+	todayDayTemp = "00"
+	try:
+		r = requests.get(
+			'http://restapi.amap.com/v3/weather/weatherInfo?extensions=all&city=130606&key=446bdde0691cffb14c1aff83a8912467')
+		r.encoding = 'utf-8'
+		weatherData = json.loads(r.text.encode('utf-8'))
+		forecasts = weatherData['forecasts'][0]
+		casts = forecasts['casts']
+		tomorrowWeather = casts[1]['dayweather']
+		tomorrowNightTemp = casts[1]['nighttemp']
+		tomorrowDayTemp = casts[1]['daytemp']
+
+		todayWeather = casts[0]['dayweather']
+		todayNightTemp = casts[0]['nighttemp']
+		todayDayTemp = casts[0]['daytemp']
+	except:
+		return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
+	return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
 
 
 try:
@@ -70,14 +98,26 @@ try:
 	week_font = os.path.join(fontPath, 'font-old.ttc')
 	day_font = os.path.join(fontPath, 'font-f930.ttc')
 	month_size, week_size, day_size, weather_size = 16, 13, 16, 13
+
+	temperature, weather, reportTime, city = getWeather()
+	tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp = getWeatherMore()
+
 	for i in range(len(WEEK) + 1):
 		# draw month title
 		if i == 0:
-			temperature, weather, reportTime = getWeather()
-			blackDraw.text((colSpace, rowSpace + 20),  temperature + u'°C|' + weather + u'|最后更新:' + reportTime[10:16],
+			blackDraw.text((90, 5), u'' + city,
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
-			blackDraw.text((colSpace, rowSpace), u' ' + MONTH[month - 1],
+			blackDraw.text((90, 20), u'' + temperature + u'°C ',
+			               fill=0,
+			               font=ImageFont.truetype(weather_font, size=18))
+			blackDraw.text((90, 40), u'' + weather,
+			               fill=0,
+			               font=ImageFont.truetype(weather_font, size=weather_size))
+			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u' 最低 ' + todayNightTemp,
+			               fill=0,
+			               font=ImageFont.truetype(weather_font, size=weather_size))
+			blackDraw.text((colSpace, 30), u' ' + MONTH[month - 1],
 			               fill=0,
 			               font=ImageFont.truetype(month_font, size=month_size))
 			top = rowSpace // 10
@@ -120,6 +160,24 @@ try:
 		if col == 8:
 			col = 1
 			row += 1
+
+	# 添加天气图标
+	bmp_name = {u'晴': 'WQING.BMP', u'阴': 'WYIN.BMP', u'多云': 'WDYZQ.BMP',
+	            u'雷阵雨': 'WLZYU.BMP', u'小雨': 'WXYU.BMP', u'中雨': 'WXYU.BMP'}.get(weather, None)
+	if not bmp_name:
+		if u'雨' in weather:
+			bmp_name = 'WYU.BMP'
+		elif u'雪' in weather:
+			bmp_name = 'WXUE.BMP'
+		elif u'雹' in weather:
+			bmp_name = 'WBBAO.BMP'
+		elif u'雾' in weather or u'霾' in weather:
+			bmp_name = 'WWU.BMP'
+
+	imgPath = weatherImgPath + r'/' + bmp_name
+	weatherImg = Image.open(imgPath)
+	newWeatherImg = weatherImg.resize((40, 40), Image.ANTIALIAS)
+	blackImg.paste(newWeatherImg, box=(140, 10))
 
 	flipBlackImg = blackImg.transpose(Image.FLIP_LEFT_RIGHT)
 	rotateBlackImg = flipBlackImg.rotate(180)
