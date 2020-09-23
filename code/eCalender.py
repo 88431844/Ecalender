@@ -114,7 +114,7 @@ try:
 			blackDraw.text((90, 40), u'' + weather,
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
-			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u'|最低 ' + todayNightTemp + u'|更新时间 ' + u'' + reportTime[13:18],
+			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u'|最低 ' + todayNightTemp + u'|更新时间 ' + u'' + reportTime[11:16],
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
 			blackDraw.text((colSpace, 30), u' ' + MONTH[month - 1],
