@@ -23,14 +23,11 @@
 
 通过raspi-config ,打开SPI后重启。
 
-## 3.supervisor配置
+## 3.crontab配置
 
-
-supervisor配置中增加：
 ```
-[program:epaperClock]
-command=python3 /root/Ecalender/code/eCalender.py
-autorestart=true ;程序退出自动重启
+# 每隔一个小时 刷新天气
+00 *   * * *  python /root/Ecalender/code/eCalender.py
 ```
 ## 显示效果
 ![avatar](img/eCalenderImg.jpg)
