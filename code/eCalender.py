@@ -101,7 +101,7 @@ try:
 
 	temperature, weather, reportTime, city = getWeather()
 	tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp = getWeatherMore()
-
+	logging.info("reportTime：" + reportTime)
 	for i in range(len(WEEK) + 1):
 		# draw month title
 		if i == 0:
@@ -114,7 +114,7 @@ try:
 			blackDraw.text((90, 40), u'' + weather,
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
-			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u'|最低 ' + todayNightTemp + u'|更新时间 '+reportTime[13:18],
+			blackDraw.text((90, 55), u'最高 ' + todayDayTemp + u'|最低 ' + todayNightTemp + u'|更新时间 ' + u'' + reportTime[13:18],
 			               fill=0,
 			               font=ImageFont.truetype(weather_font, size=weather_size))
 			blackDraw.text((colSpace, 30), u' ' + MONTH[month - 1],
