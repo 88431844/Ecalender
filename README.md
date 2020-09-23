@@ -20,8 +20,8 @@
     
  
 ## 2.打开树莓派SPI
-![avatar](https://github.com/88431844/epaperClock/blob/master/img/raspi-config.JPG)
-![avatar](https://github.com/88431844/epaperClock/blob/master/img/spi.JPG)
+![avatar](img/raspi-config.JPG)
+![avatar](img/spi.JPG)
 
 通过raspi-config ,打开SPI后重启。
 
@@ -35,3 +35,4 @@ command=python3 /root/Ecalender/code/eCalender.py
 autorestart=true ;程序退出自动重启
 ```
 ## 显示效果
+![avatar](img/eCalenderImg.jpg)
