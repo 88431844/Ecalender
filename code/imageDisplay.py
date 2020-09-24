@@ -20,15 +20,14 @@ try:
     epd = epd4in2_GD.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.ClearBlack()
+    epd.Clear()
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
-    redImg = Image.new('1', (epd.width, epd.height), 0)
-    Himage = Image.open(os.path.join(picdir, 'ma.jpg'))
+    Himage = Image.open(os.path.join(picdir, 'qunxiatu.jpeg'))
     flipImg = Himage.transpose(Image.FLIP_LEFT_RIGHT)
     rotateImg = flipImg.rotate(180)
-    epd.display(epd.getbuffer(rotateImg),epd.getbuffer(redImg))
+    epd.displayBlack(epd.getbuffer(rotateImg))
 
 
 except IOError as e:
