@@ -24,7 +24,7 @@ try:
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
-    Himage = Image.open(os.path.join(picdir, 'mountain.jpeg'))
+    Himage = Image.open(os.path.join(picdir, 'qunxiatu.jpeg'))
     flipImg = Himage.transpose(Image.FLIP_LEFT_RIGHT)
     rotateImg = flipImg.rotate(180)
     epd.displayBlack(epd.getbuffer(rotateImg))
