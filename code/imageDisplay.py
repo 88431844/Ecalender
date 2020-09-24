@@ -3,6 +3,7 @@
 import sys
 import os
 import logging
+import requests
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'screenSaver')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
@@ -12,9 +13,19 @@ if os.path.exists(libdir):
 from epd_driver import epd4in2_GD
 from PIL import Image
 
+logging.basicConfig(level=logging.DEBUG)
 
+def checkNetwork():
+        try:
+                requests.get("https://www.baidu.com")
+                logging.info("network good")
+                return 1
+        except:
+                logging.info("network bad")
+                return 2
 
 try:
+    checkNetwork()
     logging.info("eCalender")
 
     epd = epd4in2_GD.EPD()
