@@ -4,7 +4,7 @@ import sys
 import os
 import logging
 
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'img')
+picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'screenSaver')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
@@ -24,7 +24,7 @@ try:
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
-    Himage = Image.open(os.path.join(picdir, 'calender_black.bmp'))
+    Himage = Image.open(os.path.join(picdir, 'mountain.jpeg'))
     flipImg = Himage.transpose(Image.FLIP_LEFT_RIGHT)
     rotateImg = flipImg.rotate(180)
     epd.displayBlack(epd.getbuffer(rotateImg))
