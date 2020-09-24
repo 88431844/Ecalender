@@ -24,10 +24,11 @@ try:
     logging.info("Clear done")
 
     logging.info(".read calender bmp file")
-    Himage = Image.open(os.path.join(picdir, 'qunxiatu.jpeg'))
+    redImg = Image.new('1', (epd.width, epd.height), 0)
+    Himage = Image.open(os.path.join(picdir, 'ma.jpg'))
     flipImg = Himage.transpose(Image.FLIP_LEFT_RIGHT)
     rotateImg = flipImg.rotate(180)
-    epd.displayBlack(epd.getbuffer(rotateImg))
+    epd.display(epd.getbuffer(rotateImg),epd.getbuffer(redImg))
 
 
 except IOError as e:
