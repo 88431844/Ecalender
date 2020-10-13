@@ -52,13 +52,13 @@ def getWeather():
 
 
 def getWeatherMore():
-	if checkNetwork() == 1:
-		tomorrowWeather = "00"
-		tomorrowNightTemp = "00"
-		tomorrowDayTemp = "00"
-		todayWeather = "00"
-		todayNightTemp = "00"
-		todayDayTemp = "00"
+	tomorrowWeather = "00"
+	tomorrowNightTemp = "00"
+	tomorrowDayTemp = "00"
+	todayWeather = "00"
+	todayNightTemp = "00"
+	todayDayTemp = "00"
+	if checkNetwork() == 2:
 		return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
 	try:
 		r = requests.get(
