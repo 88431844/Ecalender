@@ -24,26 +24,42 @@ from PIL import Image, ImageDraw, ImageFont
 
 logging.basicConfig(level=logging.DEBUG)
 
+def checkNetwork():
+        try:
+                requests.get("https://www.baidu.com")
+                logging.info("network good")
+                return 1
+        except:
+                logging.info("network bad")
+                return 2
 
 def getWeather():
-	r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=130606&key=446bdde0691cffb14c1aff83a8912467')
-	r.encoding = 'utf-8'
-	weatherData = json.loads(r.text.encode('utf-8'))
-	w = weatherData['lives'][0]
-	temperature = str(w['temperature'].encode('utf-8'))
-	weather = str(w['weather'].encode('utf-8'))
-	reportTime = str(w['reporttime'].encode('utf-8'))
-	city = str(w['city'].encode('utf-8'))
+	if checkNetwork() == 1:
+		r = requests.get('http://restapi.amap.com/v3/weather/weatherInfo?city=130606&key=446bdde0691cffb14c1aff83a8912467')
+		r.encoding = 'utf-8'
+		weatherData = json.loads(r.text.encode('utf-8'))
+		w = weatherData['lives'][0]
+		temperature = str(w['temperature'].encode('utf-8'))
+		weather = str(w['weather'].encode('utf-8'))
+		reportTime = str(w['reporttime'].encode('utf-8'))
+		city = str(w['city'].encode('utf-8'))
+	else:
+		temperature = 0
+		weather = '无网络'
+		reportTime = '1970-01-01 00:00:00'
+		city = '无网络'
 	return temperature, weather, reportTime, city
 
 
 def getWeatherMore():
-	tomorrowWeather = "00"
-	tomorrowNightTemp = "00"
-	tomorrowDayTemp = "00"
-	todayWeather = "00"
-	todayNightTemp = "00"
-	todayDayTemp = "00"
+	if checkNetwork() == 1:
+		tomorrowWeather = "00"
+		tomorrowNightTemp = "00"
+		tomorrowDayTemp = "00"
+		todayWeather = "00"
+		todayNightTemp = "00"
+		todayDayTemp = "00"
+		return tomorrowWeather, tomorrowNightTemp, tomorrowDayTemp, todayWeather, todayNightTemp, todayDayTemp
 	try:
 		r = requests.get(
 			'http://restapi.amap.com/v3/weather/weatherInfo?extensions=all&city=130606&key=446bdde0691cffb14c1aff83a8912467')
