@@ -45,7 +45,7 @@ def getWeather():
 		city = str(w['city'].encode('utf-8'))
 	else:
 		temperature = '-1'
-		weather = '无网络'
+		weather = '晴'
 		reportTime = '1970-01-01 00:00:00'
 		city = '无网络'
 	return temperature, weather, reportTime, city
