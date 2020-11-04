@@ -93,7 +93,7 @@ try:
 	nowDay = int(time.strftime('%d'))
 
 	WEEK = ('星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日')
-	MONTH = ('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月')
+	MONTH = ('一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一', '十二')
 
 	# create new blank picture
 	blackImg = Image.new('1', (epd.width, epd.height), 255)
